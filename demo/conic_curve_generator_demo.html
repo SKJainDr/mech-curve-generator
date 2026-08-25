@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Universal Conic &amp; Curve Generator — Working Demo</title>
+
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
+<meta name="theme-color" content="#232c38">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#f6f1e3;
+  --panel:#efe6cf;
+  --panel-line:#d9cca3;
+  --ink:#232c38;
+  --ink-soft:#5c6572;
+  --ink-faint:#8a92a0;
+  --accent:#a8462a;
+  --accent-deep:#7a3420;
+  --accent-soft:#e7c9ba;
+  --steel:#8fa2b4;
+  --focus:#2f6f8f;
+  --font-display:'Fraunces', 'Iowan Old Style', serif;
+  --font-ui:'Source Sans 3', system-ui, sans-serif;
+  --font-mono:'IBM Plex Mono', 'SFMono-Regular', monospace;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--panel-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  color:var(--ink);
+  font-family:var(--font-ui);
+  line-height:1.45;
+}
+a{ color:var(--accent-deep); }
+
+.wrap{ max-width:1180px; margin:0 auto; padding:0 24px 60px; }
+
+header.masthead{
+  padding:38px 24px 22px;
+  max-width:1180px; margin:0 auto;
+}
+.eyebrow{
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent-deep); font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent-deep); display:inline-block; }
+h1{
+  font-family:var(--font-display); font-weight:600; font-optical-sizing:auto;
+  font-size:clamp(28px,4vw,44px); margin:10px 0 8px; letter-spacing:-0.01em; color:var(--ink);
+}
+.masthead p{ margin:0; max-width:62ch; color:var(--ink-soft); font-size:15.5px; }
+
+main.workshop{
+  display:grid; grid-template-columns: 1fr 360px; gap:22px; align-items:start;
+  max-width:1180px; margin:0 auto; padding:8px 24px 0;
+}
+@media (max-width:880px){ main.workshop{ grid-template-columns:1fr; } }
+
+.stage-card{
+  background:#fffdf7; border:1px solid var(--panel-line); border-radius:3px;
+  box-shadow: 0 1px 0 rgba(35,44,56,.04), 0 10px 30px -18px rgba(35,44,56,.35);
+  overflow:hidden;
+}
+.stage-top{
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:16px 20px 0;
+}
+.curve-name{ font-family:var(--font-display); font-size:24px; font-weight:600; color:var(--ink); }
+.curve-formula{ font-family:var(--font-mono); font-size:12.5px; color:var(--ink-soft); }
+.stage-svg-wrap{ padding:6px 8px 4px; }
+.stage-svg-wrap svg{ display:block; width:100%; height:auto; }
+.stage-bottom{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:10px 20px 16px; border-top:1px solid var(--panel-line);
+}
+.param-readout{ font-family:var(--font-mono); font-size:13px; color:var(--ink-soft); }
+.param-readout b{ color:var(--accent-deep); font-weight:600; }
+.progress-track{ flex:1; height:3px; background:var(--panel-line); border-radius:2px; overflow:hidden; margin:0 16px; }
+.progress-fill{ height:100%; width:0%; background:var(--accent); transition:width .05s linear; }
+
+.control-panel{
+  background:var(--panel); border:1px solid var(--panel-line); border-radius:3px;
+  padding:18px 18px 20px;
+}
+.panel-label{
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-faint); margin:0 0 10px; font-weight:600;
+}
+.mode-toggle{ display:flex; border:1px solid var(--ink); border-radius:3px; overflow:hidden; margin-bottom:18px; }
+.mode-toggle button{
+  flex:1; border:0; background:#fffdf7; color:var(--ink-soft); font-family:var(--font-ui); font-weight:600;
+  font-size:13.5px; padding:9px 6px; cursor:pointer;
+}
+.mode-toggle button + button{ border-left:1px solid var(--ink); }
+.mode-toggle button.active{ background:var(--ink); color:#fdf9ee; }
+.mode-toggle button:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+
+.curve-group-title{ font-family:var(--font-ui); font-size:12px; font-weight:700; color:var(--ink); margin:14px 0 8px; }
+.curve-grid{ display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.curve-btn{
+  font-family:var(--font-ui); font-size:12.8px; font-weight:600; text-align:left;
+  background:#fffdf7; border:1px solid var(--panel-line); border-radius:3px; color:var(--ink-soft);
+  padding:8px 9px; cursor:pointer; transition:border-color .12s, color .12s, background .12s;
+}
+.curve-btn:hover{ border-color:var(--steel); color:var(--ink); }
+.curve-btn.active{ border-color:var(--accent); color:var(--accent-deep); background:var(--accent-soft); }
+
+.param-block{ margin-top:18px; }
+.param-row{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; }
+#paramName{ font-size:12.8px; font-weight:600; color:var(--ink); }
+#paramReadout{ font-family:var(--font-mono); font-size:12.8px; color:var(--accent-deep); font-weight:600; }
+input[type=range]{ width:100%; accent-color:var(--accent-deep); }
+
+.transport-row{ display:flex; gap:8px; margin-top:16px; }
+.transport-row.is-hidden{ display:none; }
+.btn{
+  font-family:var(--font-ui); font-weight:600; font-size:13px; padding:9px 12px;
+  border-radius:3px; border:1px solid var(--ink); background:#fffdf7; color:var(--ink); cursor:pointer;
+}
+.btn:hover{ background:var(--ink); color:#fdf9ee; }
+.manual-panel.is-hidden{ display:none; }
+
+footer{
+  max-width:1180px; margin:30px auto 0; padding:18px 24px 0; border-top:1px solid var(--panel-line);
+  color:var(--ink-faint); font-size:12.5px;
+}
+footer a{ color:var(--ink-soft); }
+
+.sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+
+@media (prefers-reduced-motion: reduce){
+  .progress-fill{ transition:none; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Working model &middot; interactive demo</div>
+  <h1>Universal Conic &amp; Curve Generator</h1>
+  <p>A single instrument, four physical modules, one bonus attachment set — the same eccentricity
+  and angle controls you'd turn on the real build. Watch the guided tour, or switch to manual and
+  drive each mechanism yourself.</p>
+</header>
+
+<main class="workshop">
+
+  <section class="stage-card">
+    <div class="stage-top">
+      <div>
+        <div class="curve-name" id="curveName">Ellipse</div>
+        <div class="curve-formula" id="curveFormula">b = a&middot;&radic;(1&minus;e&sup2;)</div>
+      </div>
+    </div>
+    <div class="stage-svg-wrap">
+      <svg viewBox="0 0 760 480" role="img" aria-label="Animated schematic of the currently selected mechanism drawing its curve">
+        <title>Mechanism stage</title>
+        
+<defs>
+  <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f1e9d4"/><stop offset="1" stop-color="#ddd0ab"/>
+  </linearGradient>
+  <linearGradient id="steelGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#eaf1f6"/><stop offset="1" stop-color="#aebfcd"/>
+  </linearGradient>
+  <radialGradient id="metalGrad" cx="0.35" cy="0.3" r="0.85">
+    <stop offset="0" stop-color="#f0f3f5"/><stop offset="0.55" stop-color="#9aa7b3"/><stop offset="1" stop-color="#616b74"/>
+  </radialGradient>
+  <linearGradient id="fixedGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#e3d8ba"/><stop offset="1" stop-color="#c9b98c"/>
+  </linearGradient>
+</defs>
+
+        <g id="g-ellipse" class="stage-group" style="display:none"><rect x="130.0" y="10.0" width="500.0" height="460.0" fill="url(#wood)" stroke="var(--ink)" stroke-width="1.4"/><line x1="140.0" y1="20.0" x2="140.0" y2="460.0" stroke="none" stroke-width="1.4" stroke-linecap="round"/><rect x="150.0" y="236.0" width="460.0" height="8.0" fill="#fff" stroke="var(--ink)" stroke-width="1"/><rect x="376.0" y="10.0" width="8.0" height="460.0" fill="#fff" stroke="var(--ink)" stroke-width="1"/><circle cx="150.0" cy="30.0" r="3.0" fill="none" stroke="var(--ink-soft)" stroke-width="1"/><circle cx="610.0" cy="30.0" r="3.0" fill="none" stroke="var(--ink-soft)" stroke-width="1"/><circle cx="150.0" cy="450.0" r="3.0" fill="none" stroke="var(--ink-soft)" stroke-width="1"/><circle cx="610.0" cy="450.0" r="3.0" fill="none" stroke="var(--ink-soft)" stroke-width="1"/><path id="ellipse-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="ellipse-rod" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="16" stroke-linecap="round"/><circle id="ellipse-pinA" cx="0.0" cy="0.0" r="8.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><circle id="ellipse-pinB" cx="0.0" cy="0.0" r="8.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><circle id="ellipse-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/><text x="150.0" y="0.0" font-size="10" font-weight="600" text-anchor="start" fill="var(--accent-deep)"></text></g>
+<g id="g-parabola" class="stage-group" style="display:none"><rect x="70.0" y="30.0" width="600.0" height="420.0" fill="url(#wood)" stroke="var(--ink)" stroke-width="1.4"/><path id="parabola-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="parabola-rail" x1="0.0" y1="40.0" x2="0.0" y2="440.0" stroke="url(#steelGrad)" stroke-width="12" stroke-linecap="round"/><circle id="parabola-focus" cx="430.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><text x="440.0" y="230.0" font-size="12" font-weight="700" text-anchor="start" fill="var(--accent-deep)">F</text><rect id="parabola-carriage" x="0.0" y="0.0" width="18.0" height="18.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="parabola-blade" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="9" stroke-linecap="round"/><line id="parabola-thread" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="parabola-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-hyperbola" class="stage-group" style="display:none"><rect x="40.0" y="15.0" width="680.0" height="450.0" fill="url(#wood)" stroke="var(--ink)" stroke-width="1.4"/><path id="hyperbola-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="hyperbola-rod" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="11" stroke-linecap="round"/><line id="hyperbola-thread1" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.2" stroke-linecap="round"/><line id="hyperbola-thread2" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.2" stroke-linecap="round"/><circle id="hyperbola-F1" cx="280.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><circle id="hyperbola-F2" cx="500.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><text x="280.0" y="266.0" font-size="10" font-weight="500" text-anchor="middle" fill="var(--ink-soft)">F1</text><text x="500.0" y="266.0" font-size="10" font-weight="500" text-anchor="middle" fill="var(--ink-soft)">F2</text><circle id="hyperbola-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-pairlines" class="stage-group" style="display:none"><line id="pairlines-up" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="14" stroke-linecap="round"/><line id="pairlines-dn" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="14" stroke-linecap="round"/><path id="pairlines-arc" fill="none" stroke="var(--accent-deep)" stroke-width="1.4" stroke-linecap="round"/><text id="pairlines-label" x="0.0" y="0.0" font-size="13" font-weight="700" text-anchor="start" fill="var(--accent-deep)"></text><circle cx="390.0" cy="240.0" r="11.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1.4"/></g>
+<g id="g-sine" class="stage-group" style="display:none"><line x1="220.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="sine-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle cx="140.0" cy="240.0" r="45.0" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="140.0" cy="240.0" r="45.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="sine-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><rect id="sine-carriage" x="0.0" y="0.0" width="14.0" height="14.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="sine-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="sine-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-cycloid" class="stage-group" style="display:none"><line x1="170.0" y1="380.0" x2="560.0" y2="380.0" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/><path id="cycloid-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle id="cycloid-disc" cx="0.0" cy="0.0" r="35.0" fill="none" stroke="url(#steelGrad)" stroke-width="5"/><line id="cycloid-spoke" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="cycloid-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-cardioid" class="stage-group" style="display:none"><circle id="cardioid-fixed" cx="380.0" cy="240.0" r="45.0" fill="url(#fixedGrad)" stroke="var(--ink)" stroke-width="1.6"/><path id="cardioid-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle id="cardioid-disc" cx="0.0" cy="0.0" r="45.0" fill="none" stroke="url(#steelGrad)" stroke-width="5"/><line id="cardioid-spoke" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="cardioid-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-spiral" class="stage-group" style="display:none"><circle cx="380.0" cy="240.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1.4"/><path id="spiral-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="spiral-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="8" stroke-linecap="round"/><circle id="spiral-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-helix" class="stage-group" style="display:none"><line x1="180.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="helix-trace" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><circle cx="110.0" cy="130.0" r="32.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="helix-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><circle id="helix-carriage" cx="0.0" cy="0.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="helix-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="helix-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-spiralhelix" class="stage-group" style="display:none"><line x1="180.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="spiralhelix-trace" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><circle cx="110.0" cy="130.0" r="32.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="spiralhelix-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><circle id="spiralhelix-carriage" cx="0.0" cy="0.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="spiralhelix-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="spiralhelix-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+      </svg>
+    </div>
+    <div class="stage-bottom">
+      <div class="param-readout">param: <b id="paramReadoutMini">&nbsp;</b></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </section>
+
+  <aside class="control-panel">
+    <div class="panel-label">Mode</div>
+    <div class="mode-toggle">
+      <button id="modeAuto" class="active">&#9654; Guided tour</button>
+      <button id="modeManual">Manual</button>
+    </div>
+
+    <div class="transport-row" id="transportRow">
+      <button class="btn" id="pauseBtn">&#9208; Pause</button>
+      <button class="btn" id="replayBtn">&#8635; Replay this one</button>
+    </div>
+
+    <div class="manual-panel is-hidden" id="manualPanel">
+      <div class="curve-group-title">The five conics</div>
+      <div class="curve-grid">
+        <button class="curve-btn" data-id="ellipse">Circle / Ellipse</button>
+<button class="curve-btn" data-id="parabola">Parabola</button>
+<button class="curve-btn" data-id="hyperbola">Hyperbola</button>
+<button class="curve-btn" data-id="pairlines">Pair of lines</button>
+      </div>
+      <div class="curve-group-title">Six more curves</div>
+      <div class="curve-grid">
+        <button class="curve-btn" data-id="sine">Sine wave</button>
+<button class="curve-btn" data-id="cycloid">Cycloid</button>
+<button class="curve-btn" data-id="cardioid">Cardioid</button>
+<button class="curve-btn" data-id="spiral">Spiral</button>
+<button class="curve-btn" data-id="helix">Helix</button>
+<button class="curve-btn" data-id="spiralhelix">Spiralling helix</button>
+      </div>
+
+      <div class="param-block">
+        <div class="param-row">
+          <span id="paramName">Eccentricity e</span>
+          <span id="paramReadout">0.55</span>
+        </div>
+        <input type="range" id="paramSlider" min="0" max="0.95" step="0.01" value="0.55">
+      </div>
+      <div class="transport-row">
+        <button class="btn" id="replayBtn2" onclick="document.getElementById('replayBtn').click()">&#9654; Draw it</button>
+      </div>
+    </div>
+  </aside>
+
+</main>
+
+<footer>
+  Every control here mirrors an adjustment on the physical build — the beam-and-slider ratio, the
+  focus&ndash;directrix distance, the thread length, the pivot angle. See the build blueprints for
+  exact part dimensions. Reduced-motion is respected automatically.
+</footer>
+
+<script>
+function set(id,attrs){ const el=document.getElementById(id); if(!el) return; for(const k in attrs) el.setAttribute(k, attrs[k]); }
+
+const CURVES = {
+  ellipse: { name:'Ellipse', group:'conic', N:150, duration:3200,
+    param:{key:'e',label:'Eccentricity e',min:0,max:0.95,step:0.01,default:0.55},
+    fmt(v){ return v.toFixed(2); },
+    formula:'b = a\u00b7\u221a(1\u2212e\u00b2)',
+    points(e){ const Cx=380,Cy=240,A=110,b=A*Math.sqrt(Math.max(0,1-e*e)); const pts=[];
+      for(let i=0;i<=this.N;i++){ const t=i/this.N*2*Math.PI; pts.push([Cx+A*Math.cos(t), Cy+b*Math.sin(t)]); } return pts; },
+    mech(e,frac){ const Cx=380,Cy=240,A=110,b=A*Math.sqrt(Math.max(0,1-e*e)),L=A+b,t=frac*2*Math.PI;
+      const Ax=Cx, Ay=Cy+L*Math.sin(t), Bx=Cx+L*Math.cos(t), By=Cy, Px=Cx+A*Math.cos(t), Py=Cy+b*Math.sin(t);
+      set('ellipse-pinA',{cx:Ax,cy:Ay}); set('ellipse-pinB',{cx:Bx,cy:By}); set('ellipse-pen',{cx:Px,cy:Py});
+      set('ellipse-rod',{x1:Ax,y1:Ay,x2:Bx,y2:By}); },
+    label(e){ return e<0.03?'Circle':'Ellipse'; } },
+
+  parabola: { name:'Parabola', group:'conic', N:130, duration:2600,
+    param:{key:'p',label:'Focus\u2013directrix distance p (mm)',min:75,max:220,step:5,default:140},
+    fmt(v){ return Math.round(v)+' mm'; },
+    formula:'thread length = p (by construction)',
+    points(p){ const Fx=430,Fy=240; const pts=[];
+      for(let i=0;i<=this.N;i++){ const yy=40+i/this.N*400; const x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p); pts.push([x,yy]); } return pts; },
+    mech(p,frac){ const Fx=430,Fy=240,railX=Fx-p,yy=40+frac*400,x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p);
+      set('parabola-rail',{x1:railX,y1:40,x2:railX,y2:440});
+      set('parabola-carriage',{x:railX-9,y:yy-9});
+      set('parabola-blade',{x1:railX,y1:yy,x2:x,y2:yy});
+      set('parabola-thread',{x1:Fx,y1:Fy,x2:x,y2:yy});
+      set('parabola-pen',{cx:x,cy:yy}); },
+    label(){ return 'Parabola'; } },
+
+  hyperbola: { name:'Hyperbola', group:'conic', N:130, duration:2600,
+    param:{key:'e',label:'Eccentricity e = c/a',min:1.05,max:2.5,step:0.02,default:1.6},
+    fmt(v){ return v.toFixed(2); },
+    formula:'thread = rod length \u2212 2a',
+    points(e){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(1,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5; const pts=[];
+      for(let i=0;i<=this.N;i++){ const u=-umax+2*umax*i/this.N; pts.push([Ox+a*Math.cosh(u), Fy+b*Math.sinh(u)]); } return pts; },
+    mech(e,frac){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(1,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5,u=-umax+2*umax*frac;
+      const Px=Ox+a*Math.cosh(u), Py=Fy+b*Math.sinh(u), F2x=F1x+2*Cc;
+      const dx=Px-F1x, dy=Py-Fy, dist=Math.sqrt(dx*dx+dy*dy), R=Math.max(dist*1.3,280);
+      const Bx=F1x+R*dx/dist, By=Fy+R*dy/dist;
+      set('hyperbola-rod',{x1:F1x,y1:Fy,x2:Bx,y2:By});
+      set('hyperbola-thread1',{x1:Bx,y1:By,x2:Px,y2:Py});
+      set('hyperbola-thread2',{x1:Px,y1:Py,x2:F2x,y2:Fy});
+      set('hyperbola-pen',{cx:Px,cy:Py}); },
+    label(){ return 'Hyperbola'; } },
+
+  pairlines: { name:'Pair of lines', group:'conic', special:'lines', duration:1400,
+    param:{key:'a',label:'Crossing angle \u03b1 (\u00b0)',min:20,max:160,step:1,default:70},
+    fmt(v){ return Math.round(v)+'\u00b0'; },
+    formula:'e = sec(\u03b1/2)',
+    mechLines(alphaDeg,frac){ const Px=390,Py=240,L=230,half=alphaDeg*Math.PI/360;
+      const x1=Px+L*frac*Math.cos(half), y1=Py-L*frac*Math.sin(half);
+      const x2=Px+L*frac*Math.cos(-half), y2=Py-L*frac*Math.sin(-half);
+      set('pairlines-up',{x1:Px,y1:Py,x2:x1,y2:y1});
+      set('pairlines-dn',{x1:Px,y1:Py,x2:x2,y2:y2});
+      const ax1=Px+50*Math.cos(half), ay1=Py-50*Math.sin(half);
+      const ax2=Px+50*Math.cos(-half), ay2=Py-50*Math.sin(-half);
+      document.getElementById('pairlines-arc').setAttribute('d','M '+ax1.toFixed(1)+' '+ay1.toFixed(1)+' A 50 50 0 0 0 '+ax2.toFixed(1)+' '+ay2.toFixed(1));
+      const lbl=document.getElementById('pairlines-label'); if(lbl){ lbl.setAttribute('x',Px+66); lbl.setAttribute('y',Py+4); lbl.textContent='\u03b1='+Math.round(alphaDeg)+'\u00b0'; } },
+    label(){ return 'Pair of straight lines'; } },
+
+  sine: { name:'Sine wave', group:'bonus', N:170, duration:3400,
+    param:{key:'R',label:'Amplitude R (mm)',min:20,max:70,step:2,default:45},
+    fmt(v){ return Math.round(v)+' mm'; },
+    formula:'y = R\u00b7sin(\u03b8)',
+    points(R){ const DCy=240,x0=220,wl=160,width=400; const pts=[];
+      for(let i=0;i<=this.N;i++){ const x=x0+i/this.N*width; pts.push([x, DCy-R*Math.sin(2*Math.PI*(x-x0)/wl)]); } return pts; },
+    mech(R,frac){ const DCx=140,DCy=240,DR=45,x0=220,width=400,t=frac*2.5*2*Math.PI;
+      const pinX=DCx+DR*Math.cos(t), pinY=DCy+DR*Math.sin(t), x=x0+frac*width, y=DCy-R*Math.sin(t);
+      set('sine-pin',{cx:pinX,cy:pinY});
+      set('sine-carriage',{x:x-7,y:DCy-7});
+      set('sine-arm',{x1:x,y1:DCy,x2:x,y2:y});
+      set('sine-pen',{cx:x,cy:y}); },
+    label(){ return 'Sine wave'; } },
+
+  cycloid: { name:'Cycloid', group:'bonus', N:120, duration:3000,
+    param:{key:'r',label:'Disc radius r (mm)',min:20,max:50,step:1,default:35},
+    fmt(v){ return Math.round(v)+' mm'; },
+    formula:'x=r(t\u2212sin t), y=r(1\u2212cos t)',
+    points(r){ const x0=190,base=380,T=3*Math.PI; const pts=[];
+      for(let i=0;i<=this.N;i++){ const tt=i/this.N*T; pts.push([x0+r*(tt-Math.sin(tt)), base-r*(1-Math.cos(tt))]); } return pts; },
+    mech(r,frac){ const x0=190,base=380,T=3*Math.PI,tt=frac*T,cx=x0+r*tt,cy=base-r;
+      const px=x0+r*(tt-Math.sin(tt)), py=base-r*(1-Math.cos(tt));
+      set('cycloid-disc',{cx:cx,cy:cy,r:r});
+      set('cycloid-spoke',{x1:cx,y1:cy,x2:px,y2:py});
+      set('cycloid-pen',{cx:px,cy:py}); },
+    label(){ return 'Cycloid'; } },
+
+  cardioid: { name:'Cardioid', group:'bonus', N:130, duration:3000,
+    param:{key:'r',label:'Disc radius r (mm)',min:25,max:55,step:1,default:45},
+    fmt(v){ return Math.round(v)+' mm'; },
+    formula:'x=r(2cos\u03c6\u2212cos2\u03c6)',
+    points(r){ const Ox=380,Oy=240; const pts=[];
+      for(let i=0;i<=this.N;i++){ const phi=i/this.N*2*Math.PI; pts.push([Ox+r*(2*Math.cos(phi)-Math.cos(2*phi)), Oy+r*(2*Math.sin(phi)-Math.sin(2*phi))]); } return pts; },
+    mech(r,frac){ const Ox=380,Oy=240,phi=frac*2*Math.PI;
+      set('cardioid-fixed',{cx:Ox,cy:Oy,r:r});
+      const cx=Ox+2*r*Math.cos(phi), cy=Oy+2*r*Math.sin(phi);
+      const px=Ox+r*(2*Math.cos(phi)-Math.cos(2*phi)), py=Oy+r*(2*Math.sin(phi)-Math.sin(2*phi));
+      set('cardioid-disc',{cx:cx,cy:cy,r:r});
+      set('cardioid-spoke',{x1:cx,y1:cy,x2:px,y2:py});
+      set('cardioid-pen',{cx:px,cy:py}); },
+    label(){ return 'Cardioid'; } },
+
+  spiral: { name:'Archimedean spiral', group:'bonus', N:150, duration:3400,
+    param:{key:'rho',label:'Post radius \u03c1 (mm)',min:4,max:12,step:0.5,default:8},
+    fmt(v){ return v.toFixed(1)+' mm'; },
+    formula:'r = \u03c1\u00b7\u03b8',
+    points(rho){ const Ox=380,Oy=240,thmax=6*Math.PI; const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*thmax, r=rho*th; pts.push([Ox+r*Math.cos(th), Oy+r*Math.sin(th)]); } return pts; },
+    mech(rho,frac){ const Ox=380,Oy=240,thmax=6*Math.PI,th=frac*thmax,r=rho*th;
+      const px=Ox+r*Math.cos(th), py=Oy+r*Math.sin(th);
+      set('spiral-arm',{x1:Ox,y1:Oy,x2:px,y2:py});
+      set('spiral-pen',{cx:px,cy:py}); },
+    label(){ return 'Archimedean spiral'; } },
+
+  helix: { name:'Helix', group:'bonus', N:170, duration:3800,
+    param:{key:'r',label:'Coil radius r (mm)',min:20,max:55,step:1,default:40},
+    fmt(v){ return Math.round(v)+' mm'; },
+    formula:'x=k\u00b7\u03b8, y=r\u00b7sin(\u03b8)',
+    points(r){ const x0=200,turns=3,base=240,kAx=460/(turns*2*Math.PI); const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*turns*2*Math.PI; pts.push([x0+kAx*th, base-r*Math.sin(th)]); } return pts; },
+    mech(r,frac){ const x0=200,turns=3,base=240,kAx=460/(turns*2*Math.PI),th=frac*turns*2*Math.PI;
+      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+kAx*th, y=base-r*Math.sin(th);
+      set('helix-pin',{cx:pinX,cy:pinY});
+      set('helix-carriage',{cx:x,cy:base});
+      set('helix-arm',{x1:x,y1:base,x2:x,y2:y});
+      set('helix-pen',{cx:x,cy:y}); },
+    label(){ return 'Helix (side view)'; } },
+
+  spiralhelix: { name:'Spiralling helix', group:'bonus', N:180, duration:4200,
+    param:{key:'k2',label:'Flare rate (mm/turn)',min:2,max:10,step:0.2,default:5.4},
+    fmt(v){ return v.toFixed(1)+' mm/turn'; },
+    formula:'r=r0+k\u00b7turns, x=k2\u00b7\u03b8',
+    points(k2){ const x0=200,turns=4,base=240,kAx=460/(turns*2*Math.PI),r0=6; const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*turns*2*Math.PI, rr=r0+k2*(th/(2*Math.PI)); pts.push([x0+kAx*th, base-rr*Math.sin(th)]); } return pts; },
+    mech(k2,frac){ const x0=200,turns=4,base=240,kAx=460/(turns*2*Math.PI),r0=6,th=frac*turns*2*Math.PI,rr=r0+k2*(th/(2*Math.PI));
+      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+kAx*th, y=base-rr*Math.sin(th);
+      set('spiralhelix-pin',{cx:pinX,cy:pinY});
+      set('spiralhelix-carriage',{cx:x,cy:base});
+      set('spiralhelix-arm',{x1:x,y1:base,x2:x,y2:y});
+      set('spiralhelix-pen',{cx:x,cy:y}); },
+    label(){ return 'Spiralling helix'; } },
+};
+
+const CURVE_ORDER = ['ellipse','ellipse','parabola','hyperbola','pairlines','sine','cycloid','cardioid','spiral','helix','spiralhelix'];
+const DEMO_SEQUENCE = [
+  {id:'ellipse', value:0, labelOverride:'Circle'},
+  {id:'ellipse', value:0.6, labelOverride:'Ellipse'},
+  {id:'parabola', value:140},
+  {id:'hyperbola', value:1.6},
+  {id:'pairlines', value:70},
+  {id:'sine', value:45},
+  {id:'cycloid', value:35},
+  {id:'cardioid', value:45},
+  {id:'spiral', value:8},
+  {id:'helix', value:40},
+  {id:'spiralhelix', value:5.4},
+];
+
+let animFrame=null, animStart=0, isPaused=false, isDrawing=false, pauseStartedAt=0;
+let demoRunning=false, demoIndex=0, demoTimeout=null;
+let current={id:'ellipse', value:0.55};
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function selectCurveGroup(id){
+  document.querySelectorAll('.stage-group').forEach(el=> el.style.display = (el.id==='g-'+id)?'':'none');
+}
+function updateReadout(id,value,labelOverride){
+  const c = CURVES[id];
+  document.getElementById('curveName').textContent = labelOverride || c.label(value);
+  document.getElementById('curveFormula').textContent = c.formula;
+  document.getElementById('paramName').textContent = c.param.label;
+  document.getElementById('paramReadout').textContent = c.fmt(value);
+  document.getElementById('paramReadoutMini').textContent = c.param.label+' = '+c.fmt(value);
+}
+function cancelAnim(){ if(animFrame){ cancelAnimationFrame(animFrame); animFrame=null; } if(demoTimeout){ clearTimeout(demoTimeout); demoTimeout=null; } isPaused=false; isDrawing=false; setPauseLabel(); }
+
+function runAnimation(id, value, opts){
+  opts = opts||{};
+  const c = CURVES[id];
+  const isLines = c.special==='lines';
+  const pts = isLines? null : c.points(value);
+  if(!isLines){ document.getElementById(id+'-trace').setAttribute('d',''); }
+  document.getElementById('progressFill').style.width='0%';
+  animStart = performance.now();
+  isDrawing = true;
+  const dur = reduceMotion? 1 : c.duration;
+  function step(now){
+    if(isPaused){ animFrame = requestAnimationFrame(step); return; }
+    const frac = Math.min(1, (now-animStart)/dur);
+    document.getElementById('progressFill').style.width = (frac*100).toFixed(1)+'%';
+    if(isLines){ c.mechLines(value, frac); }
+    else {
+      const count = Math.max(1, Math.ceil(frac*c.N));
+      let d=''; for(let i=0;i<=count;i++){ d += (i===0?'M':'L')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)+' '; }
+      document.getElementById(id+'-trace').setAttribute('d', d);
+      c.mech(value, frac);
+    }
+    if(frac<1){ animFrame = requestAnimationFrame(step); }
+    else { isDrawing=false; animFrame=null; if(opts.onComplete) opts.onComplete(); }
+  }
+  animFrame = requestAnimationFrame(step);
+}
+
+function drawCurve(id, value, opts){
+  opts = opts||{};
+  cancelAnim();
+  selectCurveGroup(id);
+  current = {id,value};
+  updateReadout(id, value, opts.labelOverride);
+  runAnimation(id, value, opts);
+}
+function drawStatic(id, value){
+  cancelAnim();
+  selectCurveGroup(id);
+  current = {id,value};
+  updateReadout(id, value);
+  document.getElementById('progressFill').style.width='100%';
+  const c = CURVES[id];
+  if(c.special==='lines'){ c.mechLines(value,1); return; }
+  const pts = c.points(value);
+  let d=''; for(let i=0;i<pts.length;i++){ d += (i===0?'M':'L')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)+' '; }
+  document.getElementById(id+'-trace').setAttribute('d', d);
+  c.mech(value, 1);
+}
+
+function setPauseLabel(){
+  const btn = document.getElementById('pauseBtn');
+  if(!btn) return;
+  btn.textContent = isPaused? '\u25b6 Resume' : '\u23f8 Pause';
+}
+function togglePause(){
+  if(!demoRunning && !isDrawing) return;
+  if(isPaused){ const pausedFor = performance.now()-pauseStartedAt; animStart += pausedFor; isPaused=false; }
+  else { isPaused=true; pauseStartedAt=performance.now(); }
+  setPauseLabel();
+}
+
+function runDemoStep(){
+  if(!demoRunning) return;
+  const stop = DEMO_SEQUENCE[demoIndex];
+  syncControls(stop.id, stop.value);
+  drawCurve(stop.id, stop.value, { labelOverride: stop.labelOverride, onComplete(){
+    if(!demoRunning) return;
+    demoTimeout = setTimeout(()=>{ if(!demoRunning) return; demoIndex=(demoIndex+1)%DEMO_SEQUENCE.length; runDemoStep(); }, reduceMotion?200:900);
+  }});
+}
+function startDemo(){
+  demoRunning = true;
+  document.getElementById('modeAuto').classList.add('active');
+  document.getElementById('modeManual').classList.remove('active');
+  document.getElementById('manualPanel').classList.add('is-hidden');
+  document.getElementById('transportRow').classList.remove('is-hidden');
+  runDemoStep();
+}
+function stopDemo(){
+  demoRunning = false;
+  cancelAnim();
+  document.getElementById('modeManual').classList.add('active');
+  document.getElementById('modeAuto').classList.remove('active');
+  document.getElementById('manualPanel').classList.remove('is-hidden');
+  document.getElementById('transportRow').classList.add('is-hidden');
+  selectManualCurve(current.id||'ellipse');
+}
+
+function syncControls(id, value){
+  const c = CURVES[id];
+  document.querySelectorAll('.curve-btn').forEach(b=> b.classList.toggle('active', b.dataset.id===id));
+  const slider = document.getElementById('paramSlider');
+  slider.min=c.param.min; slider.max=c.param.max; slider.step=c.param.step; slider.value=value;
+  document.getElementById('paramName').textContent = c.param.label;
+  document.getElementById('paramReadout').textContent = c.fmt(value);
+}
+function selectManualCurve(id){
+  const c = CURVES[id];
+  const value = (current.id===id && current.value!=null) ? current.value : c.param.default;
+  syncControls(id, value);
+  drawCurve(id, value, {});
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.getElementById('modeAuto').addEventListener('click', startDemo);
+  document.getElementById('modeManual').addEventListener('click', stopDemo);
+  document.getElementById('pauseBtn').addEventListener('click', togglePause);
+  document.getElementById('replayBtn').addEventListener('click', function(){
+    if(demoRunning){ cancelAnim(); runDemoStep(); }
+    else { drawCurve(current.id, current.value, {}); }
+  });
+  document.querySelectorAll('.curve-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ if(demoRunning) stopDemo(); selectManualCurve(btn.dataset.id); });
+  });
+  document.getElementById('paramSlider').addEventListener('input', function(){
+    const v = parseFloat(this.value);
+    current.value = v;
+    document.getElementById('paramReadout').textContent = CURVES[current.id].fmt(v);
+    drawStatic(current.id, v);
+  });
+  startDemo();
+});
+
+</script>
+</body>
+</html>

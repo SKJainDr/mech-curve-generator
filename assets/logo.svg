@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2b3542"/>
+      <stop offset="1" stop-color="#1c2430"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rounded square app-icon background -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- faint drafting grid, echoes the site's paper-grid texture -->
+  <g stroke="#3a4553" stroke-width="2">
+    <line x1="64"  y1="0" x2="64"  y2="512"/>
+    <line x1="448" y1="0" x2="448" y2="512"/>
+    <line x1="0" y1="64"  x2="512" y2="64"/>
+    <line x1="0" y1="448" x2="512" y2="448"/>
+  </g>
+
+  <!-- construction line between the two foci (the taut thread) -->
+  <line x1="126.4" y1="272" x2="385.6" y2="272" stroke="#a8462a" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- the drawn ellipse -->
+  <ellipse cx="256" cy="272" rx="170" ry="112" fill="none" stroke="#f6f1e3" stroke-width="26" stroke-linecap="round"/>
+
+  <!-- two foci -->
+  <circle cx="126.4" cy="272" r="15" fill="#a8462a"/>
+  <circle cx="385.6" cy="272" r="15" fill="#a8462a"/>
+
+  <!-- pen point riding the curve -->
+  <circle cx="256" cy="160" r="19" fill="#a8462a" stroke="#f6f1e3" stroke-width="7"/>
+</svg>
