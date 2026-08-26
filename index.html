@@ -6,22 +6,21 @@
 <title>Universal Conic &amp; Curve Generator</title>
 <meta name="description" content="A physical instrument that draws any conic section by eccentricity, plus six bonus curves — with build blueprints and a live interactive demo.">
 
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#232c38">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Universal Conic &amp; Curve Generator">
 <meta property="og:description" content="A physical instrument that draws any conic section by eccentricity, plus six bonus curves.">
-<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image" content="https://SKJainDr.github.io/mech-curve-generator/assets/social-preview.png">
+<meta property="og:url" content="https://SKJainDr.github.io/mech-curve-generator/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Universal Conic &amp; Curve Generator">
 <meta name="twitter:description" content="A physical instrument that draws any conic section by eccentricity, plus six bonus curves.">
-<meta name="twitter:image" content="assets/og-image.png">
-
+<meta name="twitter:image" content="https://SKJainDr.github.io/mech-curve-generator/assets/social-preview.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -48,8 +47,11 @@ h2{ font-family:var(--font-display); font-weight:600; font-size:clamp(22px,3vw,3
 .tagline{ max-width:62ch; color:var(--ink-soft); font-size:17px; margin:0 0 28px; }
 
 header.hero{ padding:56px 0 10px; }
-.brand-mark{ margin-bottom:16px; }
-.brand-mark img{ display:block; border-radius:9px; box-shadow:0 6px 16px -8px rgba(35,44,56,.5); }
+.brand-row{ margin-bottom:4px; }
+.brand-mark{ display:inline-block; vertical-align:middle; width:74px; height:74px; }
+.brand-mark img{ display:block; width:74px; height:74px; }
+.brand-text{ display:inline-block; vertical-align:middle; margin-left:18px; }
+.brand-text h1{ margin:6px 0 0; }
 .hero-banner{ background:#fffdf7; border:1px solid var(--panel-line); border-radius:3px; overflow:hidden; margin:18px 0 30px; box-shadow:0 10px 30px -20px rgba(35,44,56,.35); }
 .hero-banner img{ display:block; width:100%; height:auto; }
 .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
@@ -94,9 +96,13 @@ code{ font-family:var(--font-mono); background:var(--panel); padding:2px 5px; bo
 <div class="wrap">
 
 <header class="hero">
-  <div class="brand-mark"><img src="assets/logo.svg" alt="" width="40" height="40"></div>
-  <div class="eyebrow">Working model &middot; open-source instrument</div>
-  <h1>Universal Conic &amp; Curve Generator</h1>
+  <div class="brand-row">
+    <div class="brand-mark"><img src="assets/icon-mark.svg" width="74" height="74" alt="" role="img" aria-label="Instrument mark: a compass arm tracing an ellipse"></div>
+    <div class="brand-text">
+      <div class="eyebrow">Working model &middot; open-source instrument</div>
+      <h1>Universal Conic &amp; Curve Generator</h1>
+    </div>
+  </div>
   <p class="tagline">One physical instrument, four modules and a bonus attachment set, that draws
   any conic section by eccentricity &mdash; circle, ellipse, parabola, hyperbola, and a pair of
   crossing lines &mdash; plus six more curves for free: sine wave, cycloid, cardioid, spiral,
@@ -240,7 +246,7 @@ code{ font-family:var(--font-mono); background:var(--panel); padding:2px 5px; bo
 
 <footer>
   <p>Universal Conic &amp; Curve Generator &middot; an open-source mechanical drafting instrument.
-  See the <a href="https://github.com/SKJainDr/mech-curve-generator#readme">README</a> on GitHub for the repo layout and math notes.</p>
+  See the <a href="https://github.com/SKJainDr.github.io/mech-curve-generator#readme">README</a> on GitHub for the repo layout and math notes.</p>
 </footer>
 
 </div>

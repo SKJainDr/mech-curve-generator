@@ -1,4 +1,4 @@
-# Universal Conic \& Curve Generator
+<img src="assets/logo-wide.svg" alt="Universal Conic \& Curve Generator" width="520">
 
 A physical instrument — four modules plus a bonus attachment set — that draws any conic
 section by eccentricity: **circle, ellipse, parabola, hyperbola, and a pair of crossing
@@ -44,32 +44,22 @@ of them yourself.
 .
 ├── index.html                                    # GitHub Pages landing page
 ├── README.md                                     # this file
-├── favicon.ico                                   # multi-res favicon (16/32/48)
-├── site.webmanifest                              # enables "Add to desktop/home screen" with the app icon
+├── site.webmanifest                              # app icon manifest
 ├── assets/
-│   ├── hero.svg                                  # generated banner (all 11 curves)
-│   ├── og-image.png                              # social share preview image
-│   ├── logo.svg                                  # full brand mark (detailed)
-│   ├── logo-simple.svg                           # simplified mark used for small favicons
-│   └── icons/
-│       ├── icon-16.png, icon-32.png, icon-48.png # favicon sizes
-│       ├── apple-touch-icon.png                  # 180×180, iOS home screen
-│       ├── icon-192.png, icon-512.png            # Android/desktop PWA icons
+│   ├── logo.svg / logo-wide.svg                  # lockups: mark + wordmark, for docs/headers
+│   ├── icon-mark.svg                              # mark alone, transparent
+│   ├── icon-tile.svg / icon-tile-square.svg       # mark on a filled tile, source for app icons
+│   ├── favicon.svg / favicon.ico                  # browser tab icon
+│   ├── apple-touch-icon.png                       # iOS home-screen icon (180×180)
+│   ├── icon-16/32/48/64/96/192/512.png            # rasterised icon sizes
+│   ├── social-preview.png                         # Open Graph / Twitter card image (1200×630)
+│   └── hero.svg                                   # banner strip of all 11 curves
 ├── demo/
 │   └── conic\_curve\_generator\_demo.html            # standalone interactive demo (open directly, no server needed)
 └── blueprints/
     ├── conic\_generator\_build\_blueprint.svg        # Modules 1–4: the five required conics
     └── module\_c\_bonus\_attachments\_blueprint.svg   # Module C: rolling disc + spiral arm
 ```
-
-## Logo & icons
-
-The brand mark is a trammel-style ellipse: two foci joined by a taut construction line, with
-the pen point riding the curve — the same idea the physical instrument is built on. `assets/logo.svg`
-is the full detail version used in the page header; `assets/logo-simple.svg` is a bolder cutdown
-used to generate the favicon so it stays legible at 16px. `site.webmanifest` registers `icon-192.png`
-and `icon-512.png` so browsers use the mark when someone adds the site to their desktop or phone
-home screen. If you rename the repo, update `start_url`/`scope` in `site.webmanifest` to match.
 
 Everything is static — no build step, no dependencies. `index.html` and everything under
 `demo/` and `blueprints/` can be opened directly from disk or served as-is by GitHub Pages
@@ -129,6 +119,15 @@ a blank stage, with pause/resume.
 **Draw it** to watch the full progressive animation.
 
 It respects `prefers-reduced-motion` and needs nothing but a browser.
+
+## Brand assets
+
+The mark is a small compass arm tracing an ellipse — literally the instrument's core idea.
+`assets/` has it in every form a repo or site typically needs: transparent (`icon-mark.svg`),
+on a filled tile for app icons (`icon-tile.svg`), a full favicon set, an Open Graph card
+(`social-preview.png`), and two logo lockups (`logo.svg` stacked, `logo-wide.svg` single-line)
+for anywhere the full wordmark is useful. All generated from the same coordinates as the
+instrument itself, so the colours and proportions match the rest of the project exactly.
 
 ## License
 
