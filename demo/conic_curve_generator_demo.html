@@ -147,9 +147,42 @@ footer a{ color:var(--ink-soft); }
   .progress-fill{ transition:none; }
 }
 
+
+.site-bar{ background:#fffdf7; border-bottom:1px solid var(--panel-line); }
+.site-bar-inner{ max-width:1180px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+.site-bar-brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
+.site-bar-brand img{ display:block; width:32px; height:32px; }
+.site-bar-brand span{ font-family:var(--font-display); font-weight:600; font-size:15.5px; }
+.site-bar-nav{ display:flex; gap:2px; flex-wrap:wrap; }
+.site-bar-nav a{ font-family:var(--font-ui); font-weight:600; font-size:13px; color:var(--ink-soft); text-decoration:none; padding:7px 12px; border-radius:3px; }
+.site-bar-nav a:hover{ color:var(--ink); background:var(--panel); }
+.site-bar-nav a.active{ color:var(--accent-deep); background:var(--accent-soft); }
+.colophon{ margin-top:10px; padding-top:10px; border-top:1px solid var(--panel-line); color:var(--ink-faint); }
+.colophon a{ color:var(--ink-soft); }
+.param-block + .param-block{ margin-top:16px; }
+#threeDBlock{ margin-top:18px; padding-top:16px; border-top:1px solid var(--panel-line); }
+#threeDBlock > label{ display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer; }
+#threeDSliders.is-hidden{ display:none; }
+#threeDSliders{ margin-top:10px; }
+.hint{ font-size:11.5px; color:var(--ink-faint); margin-top:8px; }
+
 </style>
 </head>
 <body>
+
+<div class="site-bar">
+  <div class="site-bar-inner">
+    <a class="site-bar-brand" href="../index.html">
+      <img src="../assets/icon-mark.svg" width="32" height="32" alt="">
+      <span>Universal Conic &amp; Curve Generator</span>
+    </a>
+    <nav class="site-bar-nav" aria-label="Site">
+      <a href="../index.html">Home</a>
+      <a href="../demo/conic_curve_generator_demo.html" class="active" aria-current="page">Live demo</a>
+      <a href="../blueprints/index.html">Blueprints</a>
+    </nav>
+  </div>
+</div>
 
 <header class="masthead">
   <div class="eyebrow">Working model &middot; interactive demo</div>
@@ -191,12 +224,18 @@ footer a{ color:var(--ink-soft); }
 <g id="g-parabola" class="stage-group" style="display:none"><rect x="70.0" y="30.0" width="600.0" height="420.0" fill="url(#wood)" stroke="var(--ink)" stroke-width="1.4"/><path id="parabola-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="parabola-rail" x1="0.0" y1="40.0" x2="0.0" y2="440.0" stroke="url(#steelGrad)" stroke-width="12" stroke-linecap="round"/><circle id="parabola-focus" cx="430.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><text x="440.0" y="230.0" font-size="12" font-weight="700" text-anchor="start" fill="var(--accent-deep)">F</text><rect id="parabola-carriage" x="0.0" y="0.0" width="18.0" height="18.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="parabola-blade" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="9" stroke-linecap="round"/><line id="parabola-thread" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="parabola-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-hyperbola" class="stage-group" style="display:none"><rect x="40.0" y="15.0" width="680.0" height="450.0" fill="url(#wood)" stroke="var(--ink)" stroke-width="1.4"/><path id="hyperbola-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="hyperbola-rod" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="11" stroke-linecap="round"/><line id="hyperbola-thread1" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.2" stroke-linecap="round"/><line id="hyperbola-thread2" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.2" stroke-linecap="round"/><circle id="hyperbola-F1" cx="280.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><circle id="hyperbola-F2" cx="500.0" cy="240.0" r="7.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><text x="280.0" y="266.0" font-size="10" font-weight="500" text-anchor="middle" fill="var(--ink-soft)">F1</text><text x="500.0" y="266.0" font-size="10" font-weight="500" text-anchor="middle" fill="var(--ink-soft)">F2</text><circle id="hyperbola-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-pairlines" class="stage-group" style="display:none"><line id="pairlines-up" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="14" stroke-linecap="round"/><line id="pairlines-dn" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="14" stroke-linecap="round"/><path id="pairlines-arc" fill="none" stroke="var(--accent-deep)" stroke-width="1.4" stroke-linecap="round"/><text id="pairlines-label" x="0.0" y="0.0" font-size="13" font-weight="700" text-anchor="start" fill="var(--accent-deep)"></text><circle cx="390.0" cy="240.0" r="11.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1.4"/></g>
-<g id="g-sine" class="stage-group" style="display:none"><line x1="220.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="sine-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle cx="140.0" cy="240.0" r="45.0" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="140.0" cy="240.0" r="45.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="sine-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><rect id="sine-carriage" x="0.0" y="0.0" width="14.0" height="14.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="sine-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="sine-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-sine" class="stage-group" style="display:none"><line x1="220.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="sine-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle id="sine-diskA" cx="140.0" cy="240.0" r="45.0" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle id="sine-diskB" cx="140.0" cy="240.0" r="45.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="sine-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><rect id="sine-carriage" x="0.0" y="0.0" width="14.0" height="14.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="sine-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="sine-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-cycloid" class="stage-group" style="display:none"><line x1="170.0" y1="380.0" x2="560.0" y2="380.0" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/><path id="cycloid-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle id="cycloid-disc" cx="0.0" cy="0.0" r="35.0" fill="none" stroke="url(#steelGrad)" stroke-width="5"/><line id="cycloid-spoke" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="cycloid-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-cardioid" class="stage-group" style="display:none"><circle id="cardioid-fixed" cx="380.0" cy="240.0" r="45.0" fill="url(#fixedGrad)" stroke="var(--ink)" stroke-width="1.6"/><path id="cardioid-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle id="cardioid-disc" cx="0.0" cy="0.0" r="45.0" fill="none" stroke="url(#steelGrad)" stroke-width="5"/><line id="cardioid-spoke" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/><circle id="cardioid-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-spiral" class="stage-group" style="display:none"><circle cx="380.0" cy="240.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1.4"/><path id="spiral-trace" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><line id="spiral-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="url(#steelGrad)" stroke-width="8" stroke-linecap="round"/><circle id="spiral-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-helix" class="stage-group" style="display:none"><line x1="180.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="helix-trace" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><circle cx="110.0" cy="130.0" r="32.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="helix-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><circle id="helix-carriage" cx="0.0" cy="0.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="helix-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="helix-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
 <g id="g-spiralhelix" class="stage-group" style="display:none"><line x1="180.0" y1="240.0" x2="660.0" y2="240.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round" stroke-dasharray="4 4"/><path id="spiralhelix-trace" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><circle cx="110.0" cy="130.0" r="32.0" fill="none" stroke="url(#steelGrad)" stroke-width="6"/><circle id="spiralhelix-pin" cx="0.0" cy="0.0" r="5.0" fill="var(--ink-soft)" stroke="var(--ink)" stroke-width="1"/><circle id="spiralhelix-carriage" cx="0.0" cy="0.0" r="9.0" fill="url(#metalGrad)" stroke="var(--ink)" stroke-width="1"/><line id="spiralhelix-arm" x1="0.0" y1="0.0" x2="0.0" y2="0.0" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/><circle id="spiralhelix-pen" cx="0.0" cy="0.0" r="6.5" fill="var(--accent-deep)" stroke="var(--ink)" stroke-width="1"/></g>
+<g id="g-3d" class="stage-group" style="display:none" cursor="grab">
+  <path id="grid3d" fill="none" stroke="var(--panel-line)" stroke-width="1.2"/>
+  <path id="board3d" fill="#fffdf7" fill-opacity="0.55" stroke="var(--ink-soft)" stroke-width="1.4"/>
+  <path id="trace3d" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="14" y="466" font-size="10.5" fill="var(--ink-faint)">Drag to rotate, or use the Tilt / Turn sliders</text>
+</g>
       </svg>
     </div>
     <div class="stage-bottom">
@@ -242,8 +281,26 @@ footer a{ color:var(--ink-soft); }
         </div>
         <input type="range" id="paramSlider" min="0" max="0.95" step="0.01" value="0.55">
       </div>
+      <div class="param-block is-hidden" id="param2Block">
+        <div class="param-row">
+          <span id="param2Name">Traverse rate</span>
+          <span id="param2Readout">&mdash;</span>
+        </div>
+        <input type="range" id="param2Slider" min="0" max="1" step="0.01" value="0">
+      </div>
       <div class="transport-row">
         <button class="btn" id="replayBtn2" onclick="document.getElementById('replayBtn').click()">&#9654; Draw it</button>
+      </div>
+
+      <div id="threeDBlock">
+        <label><input type="checkbox" id="threeDToggle"> Rotate this figure in 3D</label>
+        <div class="hint">Views the completed curve tilted in space, as if the drafting board were being turned in your hands.</div>
+        <div id="threeDSliders" class="is-hidden">
+          <div class="param-row"><span>Tilt</span><span id="tiltReadout">28&deg;</span></div>
+          <input type="range" id="tiltSlider" min="-85" max="85" step="1" value="28">
+          <div class="param-row" style="margin-top:10px;"><span>Turn</span><span id="turnReadout">-32&deg;</span></div>
+          <input type="range" id="turnSlider" min="-180" max="180" step="1" value="-32">
+        </div>
       </div>
     </div>
   </aside>
@@ -251,9 +308,11 @@ footer a{ color:var(--ink-soft); }
 </main>
 
 <footer>
-  Every control here mirrors an adjustment on the physical build — the beam-and-slider ratio, the
+  <p>Every control here mirrors an adjustment on the physical build — the beam-and-slider ratio, the
   focus&ndash;directrix distance, the thread length, the pivot angle. See the build blueprints for
-  exact part dimensions. Reduced-motion is respected automatically.
+  exact part dimensions. Reduced-motion is respected automatically.</p>
+  <p class="colophon">Webpage created and maintained by Dr. Sanjeev Kumar Jain &middot; &copy; 2026 &middot;
+  <a href="mailto:drskjain.class@gmail.com">drskjain.class@gmail.com</a> &middot; Mobile: 8755169830</p>
 </footer>
 
 <script>
@@ -261,25 +320,26 @@ function set(id,attrs){ const el=document.getElementById(id); if(!el) return; fo
 
 const CURVES = {
   ellipse: { name:'Ellipse', group:'conic', N:150, duration:3200,
-    param:{key:'e',label:'Eccentricity e',min:0,max:0.95,step:0.01,default:0.55},
+    param:{key:'e',label:'Eccentricity e',min:0,max:0.97,step:0.01,default:0.55},
     fmt(v){ return v.toFixed(2); },
     formula:'b = a\u00b7\u221a(1\u2212e\u00b2)',
     points(e){ const Cx=380,Cy=240,A=110,b=A*Math.sqrt(Math.max(0,1-e*e)); const pts=[];
       for(let i=0;i<=this.N;i++){ const t=i/this.N*2*Math.PI; pts.push([Cx+A*Math.cos(t), Cy+b*Math.sin(t)]); } return pts; },
-    mech(e,frac){ const Cx=380,Cy=240,A=110,b=A*Math.sqrt(Math.max(0,1-e*e)),L=A+b,t=frac*2*Math.PI;
+    mech(e,v2,frac){ const Cx=380,Cy=240,A=110,b=A*Math.sqrt(Math.max(0,1-e*e)),L=A+b,t=frac*2*Math.PI;
       const Ax=Cx, Ay=Cy+L*Math.sin(t), Bx=Cx+L*Math.cos(t), By=Cy, Px=Cx+A*Math.cos(t), Py=Cy+b*Math.sin(t);
       set('ellipse-pinA',{cx:Ax,cy:Ay}); set('ellipse-pinB',{cx:Bx,cy:By}); set('ellipse-pen',{cx:Px,cy:Py});
       set('ellipse-rod',{x1:Ax,y1:Ay,x2:Bx,y2:By}); },
     label(e){ return e<0.03?'Circle':'Ellipse'; } },
 
   parabola: { name:'Parabola', group:'conic', N:130, duration:2600,
-    param:{key:'p',label:'Focus\u2013directrix distance p (mm)',min:75,max:220,step:5,default:140},
+    param:{key:'p',label:'Focus\u2013directrix distance p (mm)',min:32,max:264,step:2,default:140},
     fmt(v){ return Math.round(v)+' mm'; },
     formula:'thread length = p (by construction)',
-    points(p){ const Fx=430,Fy=240; const pts=[];
-      for(let i=0;i<=this.N;i++){ const yy=40+i/this.N*400; const x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p); pts.push([x,yy]); } return pts; },
-    mech(p,frac){ const Fx=430,Fy=240,railX=Fx-p,yy=40+frac*400,x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p);
-      set('parabola-rail',{x1:railX,y1:40,x2:railX,y2:440});
+    yMax(p){ return Math.min(220, Math.sqrt(2*p*260)); },
+    points(p){ const Fx=430,Fy=240,yMax=this.yMax(p); const pts=[];
+      for(let i=0;i<=this.N;i++){ const yy=Fy-yMax+i/this.N*(2*yMax); const x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p); pts.push([x,yy]); } return pts; },
+    mech(p,v2,frac){ const Fx=430,Fy=240,railX=Fx-p,yMax=this.yMax(p),yy=Fy-yMax+frac*(2*yMax),x=(Fx-p/2)+((yy-Fy)*(yy-Fy))/(2*p);
+      set('parabola-rail',{x1:railX,y1:Fy-yMax-20,x2:railX,y2:Fy+yMax+20});
       set('parabola-carriage',{x:railX-9,y:yy-9});
       set('parabola-blade',{x1:railX,y1:yy,x2:x,y2:yy});
       set('parabola-thread',{x1:Fx,y1:Fy,x2:x,y2:yy});
@@ -287,12 +347,12 @@ const CURVES = {
     label(){ return 'Parabola'; } },
 
   hyperbola: { name:'Hyperbola', group:'conic', N:130, duration:2600,
-    param:{key:'e',label:'Eccentricity e = c/a',min:1.05,max:2.5,step:0.02,default:1.6},
+    param:{key:'e',label:'Eccentricity e = c/a',min:1.02,max:2.94,step:0.02,default:1.6},
     fmt(v){ return v.toFixed(2); },
     formula:'thread = rod length \u2212 2a',
-    points(e){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(1,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5; const pts=[];
+    points(e){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(0.5,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5; const pts=[];
       for(let i=0;i<=this.N;i++){ const u=-umax+2*umax*i/this.N; pts.push([Ox+a*Math.cosh(u), Fy+b*Math.sinh(u)]); } return pts; },
-    mech(e,frac){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(1,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5,u=-umax+2*umax*frac;
+    mech(e,v2,frac){ const F1x=280,Fy=240,Cc=110,a=Cc/e,b=Math.sqrt(Math.max(0.5,Cc*Cc-a*a)),Ox=F1x+Cc,umax=1.5,u=-umax+2*umax*frac;
       const Px=Ox+a*Math.cosh(u), Py=Fy+b*Math.sinh(u), F2x=F1x+2*Cc;
       const dx=Px-F1x, dy=Py-Fy, dist=Math.sqrt(dx*dx+dy*dy), R=Math.max(dist*1.3,280);
       const Bx=F1x+R*dx/dist, By=Fy+R*dy/dist;
@@ -303,9 +363,11 @@ const CURVES = {
     label(){ return 'Hyperbola'; } },
 
   pairlines: { name:'Pair of lines', group:'conic', special:'lines', duration:1400,
-    param:{key:'a',label:'Crossing angle \u03b1 (\u00b0)',min:20,max:160,step:1,default:70},
+    param:{key:'a',label:'Crossing angle \u03b1 (\u00b0)',min:3,max:177,step:1,default:70},
     fmt(v){ return Math.round(v)+'\u00b0'; },
     formula:'e = sec(\u03b1/2)',
+    linePoints(alphaDeg){ const Px=390,Py=240,L=230,half=alphaDeg*Math.PI/360;
+      return [[Px,Py],[Px+L*Math.cos(half),Py-L*Math.sin(half)],[Px,Py],[Px+L*Math.cos(-half),Py-L*Math.sin(-half)]]; },
     mechLines(alphaDeg,frac){ const Px=390,Py=240,L=230,half=alphaDeg*Math.PI/360;
       const x1=Px+L*frac*Math.cos(half), y1=Py-L*frac*Math.sin(half);
       const x2=Px+L*frac*Math.cos(-half), y2=Py-L*frac*Math.sin(-half);
@@ -318,13 +380,14 @@ const CURVES = {
     label(){ return 'Pair of straight lines'; } },
 
   sine: { name:'Sine wave', group:'bonus', N:170, duration:3400,
-    param:{key:'R',label:'Amplitude R (mm)',min:20,max:70,step:2,default:45},
+    param:{key:'R',label:'Amplitude R (mm)',min:5,max:85,step:1,default:45},
     fmt(v){ return Math.round(v)+' mm'; },
     formula:'y = R\u00b7sin(\u03b8)',
     points(R){ const DCy=240,x0=220,wl=160,width=400; const pts=[];
       for(let i=0;i<=this.N;i++){ const x=x0+i/this.N*width; pts.push([x, DCy-R*Math.sin(2*Math.PI*(x-x0)/wl)]); } return pts; },
-    mech(R,frac){ const DCx=140,DCy=240,DR=45,x0=220,width=400,t=frac*2.5*2*Math.PI;
-      const pinX=DCx+DR*Math.cos(t), pinY=DCy+DR*Math.sin(t), x=x0+frac*width, y=DCy-R*Math.sin(t);
+    mech(R,v2,frac){ const DCx=140,DCy=240,x0=220,width=400,t=frac*2.5*2*Math.PI;
+      const pinX=DCx+R*Math.cos(t), pinY=DCy+R*Math.sin(t), x=x0+frac*width, y=DCy-R*Math.sin(t);
+      set('sine-diskA',{r:R}); set('sine-diskB',{r:R});
       set('sine-pin',{cx:pinX,cy:pinY});
       set('sine-carriage',{x:x-7,y:DCy-7});
       set('sine-arm',{x1:x,y1:DCy,x2:x,y2:y});
@@ -332,12 +395,12 @@ const CURVES = {
     label(){ return 'Sine wave'; } },
 
   cycloid: { name:'Cycloid', group:'bonus', N:120, duration:3000,
-    param:{key:'r',label:'Disc radius r (mm)',min:20,max:50,step:1,default:35},
+    param:{key:'r',label:'Disc radius r (mm)',min:11,max:59,step:1,default:35},
     fmt(v){ return Math.round(v)+' mm'; },
     formula:'x=r(t\u2212sin t), y=r(1\u2212cos t)',
     points(r){ const x0=190,base=380,T=3*Math.PI; const pts=[];
       for(let i=0;i<=this.N;i++){ const tt=i/this.N*T; pts.push([x0+r*(tt-Math.sin(tt)), base-r*(1-Math.cos(tt))]); } return pts; },
-    mech(r,frac){ const x0=190,base=380,T=3*Math.PI,tt=frac*T,cx=x0+r*tt,cy=base-r;
+    mech(r,v2,frac){ const x0=190,base=380,T=3*Math.PI,tt=frac*T,cx=x0+r*tt,cy=base-r;
       const px=x0+r*(tt-Math.sin(tt)), py=base-r*(1-Math.cos(tt));
       set('cycloid-disc',{cx:cx,cy:cy,r:r});
       set('cycloid-spoke',{x1:cx,y1:cy,x2:px,y2:py});
@@ -345,12 +408,12 @@ const CURVES = {
     label(){ return 'Cycloid'; } },
 
   cardioid: { name:'Cardioid', group:'bonus', N:130, duration:3000,
-    param:{key:'r',label:'Disc radius r (mm)',min:25,max:55,step:1,default:45},
+    param:{key:'r',label:'Disc radius r (mm)',min:16,max:64,step:1,default:45},
     fmt(v){ return Math.round(v)+' mm'; },
     formula:'x=r(2cos\u03c6\u2212cos2\u03c6)',
     points(r){ const Ox=380,Oy=240; const pts=[];
       for(let i=0;i<=this.N;i++){ const phi=i/this.N*2*Math.PI; pts.push([Ox+r*(2*Math.cos(phi)-Math.cos(2*phi)), Oy+r*(2*Math.sin(phi)-Math.sin(2*phi))]); } return pts; },
-    mech(r,frac){ const Ox=380,Oy=240,phi=frac*2*Math.PI;
+    mech(r,v2,frac){ const Ox=380,Oy=240,phi=frac*2*Math.PI;
       set('cardioid-fixed',{cx:Ox,cy:Oy,r:r});
       const cx=Ox+2*r*Math.cos(phi), cy=Oy+2*r*Math.sin(phi);
       const px=Ox+r*(2*Math.cos(phi)-Math.cos(2*phi)), py=Oy+r*(2*Math.sin(phi)-Math.sin(2*phi));
@@ -360,25 +423,30 @@ const CURVES = {
     label(){ return 'Cardioid'; } },
 
   spiral: { name:'Archimedean spiral', group:'bonus', N:150, duration:3400,
-    param:{key:'rho',label:'Post radius \u03c1 (mm)',min:4,max:12,step:0.5,default:8},
-    fmt(v){ return v.toFixed(1)+' mm'; },
+    param:{key:'rho',label:'Growth rate \u03c1 (mm/rad)',min:1.6,max:14.4,step:0.2,default:8},
+    param2:{key:'turns',label:'Traverse rate (turns)',min:1,max:6,step:0.25,default:3},
+    fmt(v){ return v.toFixed(1)+' mm/rad'; },
+    fmt2(v){ return v.toFixed(2)+' turns'; },
     formula:'r = \u03c1\u00b7\u03b8',
-    points(rho){ const Ox=380,Oy=240,thmax=6*Math.PI; const pts=[];
-      for(let i=0;i<=this.N;i++){ const th=i/this.N*thmax, r=rho*th; pts.push([Ox+r*Math.cos(th), Oy+r*Math.sin(th)]); } return pts; },
-    mech(rho,frac){ const Ox=380,Oy=240,thmax=6*Math.PI,th=frac*thmax,r=rho*th;
-      const px=Ox+r*Math.cos(th), py=Oy+r*Math.sin(th);
+    points(rho,turns){ const Ox=380,Oy=240,thmax=turns*2*Math.PI,rawMax=rho*thmax,scale=Math.min(1,210/rawMax); const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*thmax, r=rho*th*scale; pts.push([Ox+r*Math.cos(th), Oy+r*Math.sin(th)]); } return pts; },
+    mech(rho,turns,frac){ const Ox=380,Oy=240,thmax=turns*2*Math.PI,rawMax=rho*thmax,scale=Math.min(1,210/rawMax);
+      const th=frac*thmax, r=rho*th*scale, px=Ox+r*Math.cos(th), py=Oy+r*Math.sin(th);
       set('spiral-arm',{x1:Ox,y1:Oy,x2:px,y2:py});
       set('spiral-pen',{cx:px,cy:py}); },
     label(){ return 'Archimedean spiral'; } },
 
   helix: { name:'Helix', group:'bonus', N:170, duration:3800,
-    param:{key:'r',label:'Coil radius r (mm)',min:20,max:55,step:1,default:40},
+    param:{key:'r',label:'Coil radius r (mm)',min:10,max:66,step:1,default:40},
+    param2:{key:'pitch',label:'Traverse rate: pitch (mm/turn)',min:60,max:280,step:5,default:153},
     fmt(v){ return Math.round(v)+' mm'; },
+    fmt2(v){ return Math.round(v)+' mm/turn'; },
     formula:'x=k\u00b7\u03b8, y=r\u00b7sin(\u03b8)',
-    points(r){ const x0=200,turns=3,base=240,kAx=460/(turns*2*Math.PI); const pts=[];
-      for(let i=0;i<=this.N;i++){ const th=i/this.N*turns*2*Math.PI; pts.push([x0+kAx*th, base-r*Math.sin(th)]); } return pts; },
-    mech(r,frac){ const x0=200,turns=3,base=240,kAx=460/(turns*2*Math.PI),th=frac*turns*2*Math.PI;
-      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+kAx*th, y=base-r*Math.sin(th);
+    geo(r,pitch){ const turns=3,axialRaw=pitch*turns,scale=Math.min(1,440/axialRaw,200/(2*r)); return {turns,scale,kAx:(pitch*scale)/(2*Math.PI),rS:r*scale}; },
+    points(r,pitch){ const x0=200,base=240,g=this.geo(r,pitch); const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*g.turns*2*Math.PI; pts.push([x0+g.kAx*th, base-g.rS*Math.sin(th)]); } return pts; },
+    mech(r,pitch,frac){ const x0=200,base=240,g=this.geo(r,pitch),th=frac*g.turns*2*Math.PI;
+      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+g.kAx*th, y=base-g.rS*Math.sin(th);
       set('helix-pin',{cx:pinX,cy:pinY});
       set('helix-carriage',{cx:x,cy:base});
       set('helix-arm',{x1:x,y1:base,x2:x,y2:y});
@@ -386,13 +454,16 @@ const CURVES = {
     label(){ return 'Helix (side view)'; } },
 
   spiralhelix: { name:'Spiralling helix', group:'bonus', N:180, duration:4200,
-    param:{key:'k2',label:'Flare rate (mm/turn)',min:2,max:10,step:0.2,default:5.4},
+    param:{key:'k2',label:'Flare rate (mm/turn)',min:0.7,max:13.7,step:0.2,default:5.4},
+    param2:{key:'pitch',label:'Traverse rate: pitch (mm/turn)',min:45,max:200,step:5,default:115},
     fmt(v){ return v.toFixed(1)+' mm/turn'; },
-    formula:'r=r0+k\u00b7turns, x=k2\u00b7\u03b8',
-    points(k2){ const x0=200,turns=4,base=240,kAx=460/(turns*2*Math.PI),r0=6; const pts=[];
-      for(let i=0;i<=this.N;i++){ const th=i/this.N*turns*2*Math.PI, rr=r0+k2*(th/(2*Math.PI)); pts.push([x0+kAx*th, base-rr*Math.sin(th)]); } return pts; },
-    mech(k2,frac){ const x0=200,turns=4,base=240,kAx=460/(turns*2*Math.PI),r0=6,th=frac*turns*2*Math.PI,rr=r0+k2*(th/(2*Math.PI));
-      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+kAx*th, y=base-rr*Math.sin(th);
+    fmt2(v){ return Math.round(v)+' mm/turn'; },
+    formula:'helix + Archimedean growth',
+    geo(k2,pitch){ const turns=4,r0=6,axialRaw=pitch*turns,rMaxRaw=r0+k2*turns,scale=Math.min(1,440/axialRaw,200/(2*rMaxRaw)); return {turns,r0,scale,kAx:(pitch*scale)/(2*Math.PI)}; },
+    points(k2,pitch){ const x0=200,base=240,g=this.geo(k2,pitch); const pts=[];
+      for(let i=0;i<=this.N;i++){ const th=i/this.N*g.turns*2*Math.PI, rr=(g.r0+k2*(th/(2*Math.PI)))*g.scale; pts.push([x0+g.kAx*th, base-rr*Math.sin(th)]); } return pts; },
+    mech(k2,pitch,frac){ const x0=200,base=240,g=this.geo(k2,pitch),th=frac*g.turns*2*Math.PI,rr=(g.r0+k2*(th/(2*Math.PI)))*g.scale;
+      const pinX=110+32*Math.cos(th), pinY=130+32*Math.sin(th), x=x0+g.kAx*th, y=base-rr*Math.sin(th);
       set('spiralhelix-pin',{cx:pinX,cy:pinY});
       set('spiralhelix-carriage',{cx:x,cy:base});
       set('spiralhelix-arm',{x1:x,y1:base,x2:x,y2:y});
@@ -400,7 +471,6 @@ const CURVES = {
     label(){ return 'Spiralling helix'; } },
 };
 
-const CURVE_ORDER = ['ellipse','ellipse','parabola','hyperbola','pairlines','sine','cycloid','cardioid','spiral','helix','spiralhelix'];
 const DEMO_SEQUENCE = [
   {id:'ellipse', value:0, labelOverride:'Circle'},
   {id:'ellipse', value:0.6, labelOverride:'Ellipse'},
@@ -410,35 +480,50 @@ const DEMO_SEQUENCE = [
   {id:'sine', value:45},
   {id:'cycloid', value:35},
   {id:'cardioid', value:45},
-  {id:'spiral', value:8},
-  {id:'helix', value:40},
-  {id:'spiralhelix', value:5.4},
+  {id:'spiral', value:8, value2:3},
+  {id:'helix', value:40, value2:153},
+  {id:'spiralhelix', value:5.4, value2:115},
 ];
 
 let animFrame=null, animStart=0, isPaused=false, isDrawing=false, pauseStartedAt=0;
 let demoRunning=false, demoIndex=0, demoTimeout=null;
-let current={id:'ellipse', value:0.55};
+let current={id:'ellipse', value:0.55, value2:undefined};
+let threeD=false, tiltDeg=28, turnDeg=-32;
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function selectCurveGroup(id){
-  document.querySelectorAll('.stage-group').forEach(el=> el.style.display = (el.id==='g-'+id)?'':'none');
+  document.querySelectorAll('.stage-group').forEach(el=>{
+    if(threeD){ el.style.display = (el.id==='g-3d')?'':'none'; }
+    else { el.style.display = (el.id==='g-'+id)?'':'none'; }
+  });
 }
-function updateReadout(id,value,labelOverride){
+function updateReadout(id,value,value2,labelOverride){
   const c = CURVES[id];
   document.getElementById('curveName').textContent = labelOverride || c.label(value);
   document.getElementById('curveFormula').textContent = c.formula;
   document.getElementById('paramName').textContent = c.param.label;
   document.getElementById('paramReadout').textContent = c.fmt(value);
-  document.getElementById('paramReadoutMini').textContent = c.param.label+' = '+c.fmt(value);
+  let mini = c.param.label+' = '+c.fmt(value);
+  const p2block = document.getElementById('param2Block');
+  if(c.param2 && value2!=null){
+    document.getElementById('param2Name').textContent = c.param2.label;
+    document.getElementById('param2Readout').textContent = c.fmt2(value2);
+    p2block.classList.remove('is-hidden');
+    mini += '  \u00b7  '+c.param2.label+' = '+c.fmt2(value2);
+  } else {
+    p2block.classList.add('is-hidden');
+  }
+  document.getElementById('paramReadoutMini').textContent = mini;
 }
 function cancelAnim(){ if(animFrame){ cancelAnimationFrame(animFrame); animFrame=null; } if(demoTimeout){ clearTimeout(demoTimeout); demoTimeout=null; } isPaused=false; isDrawing=false; setPauseLabel(); }
 
-function runAnimation(id, value, opts){
+function runAnimation(id, value, value2, opts){
   opts = opts||{};
   const c = CURVES[id];
   const isLines = c.special==='lines';
-  const pts = isLines? null : c.points(value);
-  if(!isLines){ document.getElementById(id+'-trace').setAttribute('d',''); }
+  const pts = isLines? c.linePoints(value) : c.points(value, value2);
+  const pathEl = isLines? null : document.getElementById(id+'-trace');
+  if(pathEl){ pathEl.setAttribute('d',''); }
   document.getElementById('progressFill').style.width='0%';
   animStart = performance.now();
   isDrawing = true;
@@ -449,10 +534,11 @@ function runAnimation(id, value, opts){
     document.getElementById('progressFill').style.width = (frac*100).toFixed(1)+'%';
     if(isLines){ c.mechLines(value, frac); }
     else {
-      const count = Math.max(1, Math.ceil(frac*c.N));
+      const N = c.N;
+      const count = Math.max(1, Math.ceil(frac*N));
       let d=''; for(let i=0;i<=count;i++){ d += (i===0?'M':'L')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)+' '; }
-      document.getElementById(id+'-trace').setAttribute('d', d);
-      c.mech(value, frac);
+      pathEl.setAttribute('d', d);
+      c.mech(value, value2, frac);
     }
     if(frac<1){ animFrame = requestAnimationFrame(step); }
     else { isDrawing=false; animFrame=null; if(opts.onComplete) opts.onComplete(); }
@@ -460,26 +546,28 @@ function runAnimation(id, value, opts){
   animFrame = requestAnimationFrame(step);
 }
 
-function drawCurve(id, value, opts){
+function drawCurve(id, value, value2, opts){
   opts = opts||{};
   cancelAnim();
   selectCurveGroup(id);
-  current = {id,value};
-  updateReadout(id, value, opts.labelOverride);
-  runAnimation(id, value, opts);
+  current = {id,value,value2};
+  updateReadout(id, value, value2, opts.labelOverride);
+  if(threeD){ render3D(); return; }
+  runAnimation(id, value, value2, opts);
 }
-function drawStatic(id, value){
+function drawStatic(id, value, value2){
   cancelAnim();
   selectCurveGroup(id);
-  current = {id,value};
-  updateReadout(id, value);
+  current = {id,value,value2};
+  updateReadout(id, value, value2);
   document.getElementById('progressFill').style.width='100%';
+  if(threeD){ render3D(); return; }
   const c = CURVES[id];
   if(c.special==='lines'){ c.mechLines(value,1); return; }
-  const pts = c.points(value);
+  const pts = c.points(value, value2);
   let d=''; for(let i=0;i<pts.length;i++){ d += (i===0?'M':'L')+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)+' '; }
   document.getElementById(id+'-trace').setAttribute('d', d);
-  c.mech(value, 1);
+  c.mech(value, value2, 1);
 }
 
 function setPauseLabel(){
@@ -497,13 +585,14 @@ function togglePause(){
 function runDemoStep(){
   if(!demoRunning) return;
   const stop = DEMO_SEQUENCE[demoIndex];
-  syncControls(stop.id, stop.value);
-  drawCurve(stop.id, stop.value, { labelOverride: stop.labelOverride, onComplete(){
+  syncControls(stop.id, stop.value, stop.value2);
+  drawCurve(stop.id, stop.value, stop.value2, { labelOverride: stop.labelOverride, onComplete(){
     if(!demoRunning) return;
     demoTimeout = setTimeout(()=>{ if(!demoRunning) return; demoIndex=(demoIndex+1)%DEMO_SEQUENCE.length; runDemoStep(); }, reduceMotion?200:900);
   }});
 }
 function startDemo(){
+  if(threeD){ document.getElementById('threeDToggle').checked=false; setThreeD(false); }
   demoRunning = true;
   document.getElementById('modeAuto').classList.add('active');
   document.getElementById('modeManual').classList.remove('active');
@@ -521,19 +610,106 @@ function stopDemo(){
   selectManualCurve(current.id||'ellipse');
 }
 
-function syncControls(id, value){
+function syncControls(id, value, value2){
   const c = CURVES[id];
   document.querySelectorAll('.curve-btn').forEach(b=> b.classList.toggle('active', b.dataset.id===id));
   const slider = document.getElementById('paramSlider');
   slider.min=c.param.min; slider.max=c.param.max; slider.step=c.param.step; slider.value=value;
   document.getElementById('paramName').textContent = c.param.label;
   document.getElementById('paramReadout').textContent = c.fmt(value);
+  const p2 = document.getElementById('param2Slider');
+  const p2block = document.getElementById('param2Block');
+  if(c.param2){
+    const v2 = value2!=null? value2 : c.param2.default;
+    p2.min=c.param2.min; p2.max=c.param2.max; p2.step=c.param2.step; p2.value=v2;
+    document.getElementById('param2Name').textContent = c.param2.label;
+    document.getElementById('param2Readout').textContent = c.fmt2(v2);
+    p2block.classList.remove('is-hidden');
+  } else {
+    p2block.classList.add('is-hidden');
+  }
 }
 function selectManualCurve(id){
   const c = CURVES[id];
   const value = (current.id===id && current.value!=null) ? current.value : c.param.default;
-  syncControls(id, value);
-  drawCurve(id, value, {});
+  const value2 = c.param2 ? ((current.id===id && current.value2!=null) ? current.value2 : c.param2.default) : undefined;
+  syncControls(id, value, value2);
+  drawCurve(id, value, value2, {});
+}
+
+// ---------------- 3D rotation view ----------------
+function project3(x,y,z,tilt,turn,cx0,cy0){
+  const tr = tilt*Math.PI/180, tn = turn*Math.PI/180;
+  const x1 = x*Math.cos(tn) + z*Math.sin(tn);
+  const z1 = -x*Math.sin(tn) + z*Math.cos(tn);
+  const y1 = y*Math.cos(tr) - z1*Math.sin(tr);
+  const z2 = y*Math.sin(tr) + z1*Math.cos(tr);
+  const persp = 1 + z2*0.0011;
+  return {x: cx0 + x1*persp, y: cy0 + y1*persp};
+}
+function pathFromPts(ptsList, moves){
+  // ptsList: array of {x,y}; moves: Set of indices that should be 'M' (default: only 0)
+  let d='';
+  ptsList.forEach((p,i)=>{ d += ((i===0||(moves&&moves.has(i)))?'M':'L')+p.x.toFixed(1)+' '+p.y.toFixed(1)+' '; });
+  return d;
+}
+function render3D(){
+  const id = current.id, c = CURVES[id];
+  let raw;
+  let moveIdx = null;
+  if(c.special==='lines'){ raw = c.linePoints(current.value); moveIdx = new Set([2]); }
+  else { raw = c.points(current.value, current.value2); }
+  let minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;
+  raw.forEach(([x,y])=>{ minx=Math.min(minx,x);maxx=Math.max(maxx,x);miny=Math.min(miny,y);maxy=Math.max(maxy,y); });
+  const bcx=(minx+maxx)/2, bcy=(miny+maxy)/2, w=Math.max(20,maxx-minx), h=Math.max(20,maxy-miny);
+  const pad = Math.max(26, w*0.14, h*0.14);
+  const cx0=380, cy0=240;
+
+  const projCurve = raw.map(([x,y])=> project3(x-bcx, y-bcy, 0, tiltDeg, turnDeg, cx0, cy0));
+  document.getElementById('trace3d').setAttribute('d', pathFromPts(projCurve, moveIdx));
+
+  const bx0=-w/2-pad, bx1=w/2+pad, by0=-h/2-pad, by1=h/2+pad;
+  const cornerPts = [[bx0,by0],[bx1,by0],[bx1,by1],[bx0,by1],[bx0,by0]].map(([x,y])=>project3(x,y,0,tiltDeg,turnDeg,cx0,cy0));
+  document.getElementById('board3d').setAttribute('d', pathFromPts(cornerPts));
+
+  let gd='';
+  for(let i=1;i<4;i++){
+    const gx = bx0+(bx1-bx0)*i/4;
+    const P1=project3(gx,by0,0,tiltDeg,turnDeg,cx0,cy0), P2=project3(gx,by1,0,tiltDeg,turnDeg,cx0,cy0);
+    gd += 'M '+P1.x.toFixed(1)+' '+P1.y.toFixed(1)+' L '+P2.x.toFixed(1)+' '+P2.y.toFixed(1)+' ';
+  }
+  for(let i=1;i<3;i++){
+    const gy = by0+(by1-by0)*i/3;
+    const P1=project3(bx0,gy,0,tiltDeg,turnDeg,cx0,cy0), P2=project3(bx1,gy,0,tiltDeg,turnDeg,cx0,cy0);
+    gd += 'M '+P1.x.toFixed(1)+' '+P1.y.toFixed(1)+' L '+P2.x.toFixed(1)+' '+P2.y.toFixed(1)+' ';
+  }
+  document.getElementById('grid3d').setAttribute('d', gd);
+}
+function setThreeD(on){
+  threeD = on;
+  document.getElementById('threeDSliders').classList.toggle('is-hidden', !on);
+  if(on){
+    if(demoRunning) stopDemo();
+    cancelAnim();
+    document.getElementById('progressFill').style.width='100%';
+  }
+  selectCurveGroup(current.id);
+  if(on) render3D();
+}
+
+function initDrag(){
+  const svg = document.querySelector('.stage-svg-wrap svg');
+  let dragging=false, lastX=0, lastY=0;
+  function pdown(e){ if(!threeD) return; dragging=true; const p=(e.touches?e.touches[0]:e); lastX=p.clientX; lastY=p.clientY; svg.style.cursor='grabbing'; }
+  function pmove(e){ if(!dragging||!threeD) return; const p=(e.touches?e.touches[0]:e); const dx=p.clientX-lastX, dy=p.clientY-lastY; lastX=p.clientX; lastY=p.clientY;
+    turnDeg = Math.max(-180,Math.min(180, turnDeg + dx*0.5));
+    tiltDeg = Math.max(-85,Math.min(85, tiltDeg - dy*0.5));
+    document.getElementById('tiltSlider').value=tiltDeg; document.getElementById('tiltReadout').textContent=Math.round(tiltDeg)+'\u00b0';
+    document.getElementById('turnSlider').value=turnDeg; document.getElementById('turnReadout').textContent=Math.round(turnDeg)+'\u00b0';
+    render3D(); e.preventDefault(); }
+  function pup(){ dragging=false; svg.style.cursor='grab'; }
+  svg.addEventListener('mousedown', pdown); svg.addEventListener('mousemove', pmove); window.addEventListener('mouseup', pup);
+  svg.addEventListener('touchstart', pdown, {passive:true}); svg.addEventListener('touchmove', pmove, {passive:false}); svg.addEventListener('touchend', pup);
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -542,7 +718,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('pauseBtn').addEventListener('click', togglePause);
   document.getElementById('replayBtn').addEventListener('click', function(){
     if(demoRunning){ cancelAnim(); runDemoStep(); }
-    else { drawCurve(current.id, current.value, {}); }
+    else { drawCurve(current.id, current.value, current.value2, {}); }
   });
   document.querySelectorAll('.curve-btn').forEach(function(btn){
     btn.addEventListener('click', function(){ if(demoRunning) stopDemo(); selectManualCurve(btn.dataset.id); });
@@ -551,11 +727,20 @@ document.addEventListener('DOMContentLoaded', function(){
     const v = parseFloat(this.value);
     current.value = v;
     document.getElementById('paramReadout').textContent = CURVES[current.id].fmt(v);
-    drawStatic(current.id, v);
+    drawStatic(current.id, v, current.value2);
   });
+  document.getElementById('param2Slider').addEventListener('input', function(){
+    const v2 = parseFloat(this.value);
+    current.value2 = v2;
+    document.getElementById('param2Readout').textContent = CURVES[current.id].fmt2(v2);
+    drawStatic(current.id, current.value, v2);
+  });
+  document.getElementById('threeDToggle').addEventListener('change', function(){ setThreeD(this.checked); });
+  document.getElementById('tiltSlider').addEventListener('input', function(){ tiltDeg=parseFloat(this.value); document.getElementById('tiltReadout').textContent=Math.round(tiltDeg)+'\u00b0'; render3D(); });
+  document.getElementById('turnSlider').addEventListener('input', function(){ turnDeg=parseFloat(this.value); document.getElementById('turnReadout').textContent=Math.round(turnDeg)+'\u00b0'; render3D(); });
+  initDrag();
   startDemo();
 });
-
 </script>
 </body>
 </html>

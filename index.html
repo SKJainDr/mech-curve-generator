@@ -39,6 +39,17 @@ body{
   color:var(--ink); font-family:var(--font-ui); line-height:1.55;
 }
 .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+.site-bar{ background:#fffdf7; border-bottom:1px solid var(--panel-line); margin-bottom:0; }
+.site-bar-inner{ max-width:1080px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+.site-bar-brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
+.site-bar-brand img{ display:block; width:32px; height:32px; }
+.site-bar-brand span{ font-family:var(--font-display); font-weight:600; font-size:15.5px; }
+.site-bar-nav{ display:flex; gap:2px; flex-wrap:wrap; }
+.site-bar-nav a{ font-family:var(--font-ui); font-weight:600; font-size:13px; color:var(--ink-soft); text-decoration:none; padding:7px 12px; border-radius:3px; }
+.site-bar-nav a:hover{ color:var(--ink); background:var(--panel); }
+.site-bar-nav a.active{ color:var(--accent-deep); background:var(--accent-soft); }
+.colophon{ margin-top:10px; padding-top:10px; border-top:1px solid var(--panel-line); color:var(--ink-faint); }
+.colophon a{ color:var(--ink-soft); }
 a{ color:var(--accent-deep); }
 .eyebrow{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; display:flex; align-items:center; gap:10px; }
 .eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent-deep); display:inline-block; }
@@ -93,6 +104,19 @@ code{ font-family:var(--font-mono); background:var(--panel); padding:2px 5px; bo
 </style>
 </head>
 <body>
+<div class="site-bar">
+  <div class="site-bar-inner">
+    <a class="site-bar-brand" href="index.html">
+      <img src="assets/icon-mark.svg" width="32" height="32" alt="">
+      <span>Universal Conic &amp; Curve Generator</span>
+    </a>
+    <nav class="site-bar-nav" aria-label="Site">
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="demo/conic_curve_generator_demo.html">Live demo</a>
+      <a href="blueprints/index.html">Blueprints</a>
+    </nav>
+  </div>
+</div>
 <div class="wrap">
 
 <header class="hero">
@@ -112,8 +136,7 @@ code{ font-family:var(--font-mono); background:var(--panel); padding:2px 5px; bo
 
   <div class="cta-row">
     <a class="btn btn-primary" href="demo/conic_curve_generator_demo.html">&#9654; Try the live demo</a>
-    <a class="btn btn-ghost" href="blueprints/conic_generator_build_blueprint.svg">Download the build blueprint</a>
-    <a class="btn btn-ghost" href="blueprints/module_c_bonus_attachments_blueprint.svg">Bonus attachments blueprint</a>
+    <a class="btn btn-ghost" href="blueprints/index.html">Browse the build blueprints</a>
   </div>
 </header>
 
@@ -246,7 +269,9 @@ code{ font-family:var(--font-mono); background:var(--panel); padding:2px 5px; bo
 
 <footer>
   <p>Universal Conic &amp; Curve Generator &middot; an open-source mechanical drafting instrument.
-  See the <a href="https://github.com/SKJainDr.github.io/mech-curve-generator#readme">README</a> on GitHub for the repo layout and math notes.</p>
+  See the <a href="https://github.com/SKJainDr/mech-curve-generator#readme">README</a> on GitHub for the repo layout and math notes.</p>
+  <p class="colophon">Webpage created and maintained by Dr. Sanjeev Kumar Jain &middot; &copy; 2026 &middot;
+  <a href="mailto:drskjain.class@gmail.com">drskjain.class@gmail.com</a> &middot; Mobile: 8755169830</p>
 </footer>
 
 </div>

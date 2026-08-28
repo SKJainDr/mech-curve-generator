@@ -1,4 +1,4 @@
-<img src="assets/logo-wide.svg" alt="Universal Conic \& Curve Generator" width="520">
+<img src="assets/logo-wide.svg" alt="Universal Conic & Curve Generator" width="520">
 
 A physical instrument — four modules plus a bonus attachment set — that draws any conic
 section by eccentricity: **circle, ellipse, parabola, hyperbola, and a pair of crossing
@@ -6,15 +6,12 @@ lines.** Turn the same idea a little further and it also draws a **sine wave, cy
 cardioid, Archimedean spiral, helix, and spiralling helix.**
 
 [**▶ Try the live demo**](https://SKJainDr.github.io/mech-curve-generator/demo/conic_curve_generator_demo.html) ·
-[Core blueprint (Modules 1–4)](blueprints/conic_generator_build_blueprint.svg) ·
-[Bonus Module C blueprint](blueprints/module_c_bonus_attachments_blueprint.svg) ·
+[Blueprints](https://SKJainDr.github.io/mech-curve-generator/blueprints/index.html) ·
 [GitHub Pages site](https://SKJainDr.github.io/mech-curve-generator/)
 
 <img src="assets/hero.svg" alt="A strip of all eleven curves the instrument draws, one line each" width="100%">
 
-> Replace `YOUR-USERNAME`/`YOUR-REPO` above once this is pushed, or delete the links you don't need.
-
-\---
+---
 
 ## What this is
 
@@ -55,11 +52,16 @@ of them yourself.
 │   ├── social-preview.png                         # Open Graph / Twitter card image (1200×630)
 │   └── hero.svg                                   # banner strip of all 11 curves
 ├── demo/
-│   └── conic\_curve\_generator\_demo.html            # standalone interactive demo (open directly, no server needed)
+│   └── conic_curve_generator_demo.html           # standalone interactive demo (open directly, no server needed)
 └── blueprints/
-    ├── conic\_generator\_build\_blueprint.svg        # Modules 1–4: the five required conics
-    └── module\_c\_bonus\_attachments\_blueprint.svg   # Module C: rolling disc + spiral arm
+    ├── index.html                                 # blueprint previews + downloads (linked from the site nav)
+    ├── conic_generator_build_blueprint.svg        # Modules 1–4: the five required conics
+    └── module_c_bonus_attachments_blueprint.svg   # Module C: rolling disc + spiral arm
 ```
+
+All three HTML pages (`index.html`, `demo/…`, `blueprints/index.html`) share the same header
+(logo + cross-links to the other two pages) and footer, so you can land on any of them and
+still get around the whole site.
 
 Everything is static — no build step, no dependencies. `index.html` and everything under
 `demo/` and `blueprints/` can be opened directly from disk or served as-is by GitHub Pages
@@ -70,8 +72,8 @@ from the repo root (**Settings → Pages → Deploy from branch → `/ (root)`**
 |Module|Mechanism|Draws|Parameter|
 |-|-|-|-|
 |1|Elliptical trammel (two perpendicular slots + sliding beam)|Circle, ellipse, degenerate straight line|`b = a·√(1−e²)`|
-|2|Focus \& directrix rig (T-square + taut thread)|Parabola|thread length = focus–directrix distance `p`|
-|3|Two-focus rod \& thread|Hyperbola|`e = c/a`|
+|2|Focus & directrix rig (T-square + taut thread)|Parabola|thread length = focus–directrix distance `p`|
+|3|Two-focus rod & thread|Hyperbola|`e = c/a`|
 |4|Angle-lock ruler pair|Pair of straight lines|`e = sec(α/2)`|
 
 Module 1 is the odd one out on purpose: a circle is just the trammel at `e = 0`, so it isn't
@@ -84,9 +86,14 @@ a separate mechanism — only a separate name for the same beam at a different s
 |Scotch yoke|Sine wave|rotating pin's height, `y = R·sin θ`, read off against constant-speed feed|
 |Rolling disc on a rail|Cycloid|circle of radius `r` rolling without slipping along a straight track|
 |Rolling disc on a fixed disc|Cardioid|same disc, rolling around an equal fixed disc instead|
-|Fixed post + string|Archimedean spiral|cord winding on a post of radius `ρ` gives `r = ρ·θ` for free (involute of a circle)|
-|Carriage + rotating arm|Helix (side view)|constant rotation `θ` + constant axial feed `x = k·θ`|
-|Same rig, growing radius|Spiralling / conical helix|helix + Archimedean growth combined|
+|Traverse-rate unit → radial slider|Archimedean spiral|friction-drive at slot position `s` gives `ρ = k·s`, so `r = ρ·θ`, continuously adjustable|
+|Crank + traverse-rate unit → axial carriage|Helix (side view)|Scotch-yoke crank sets radius `r`; a second traverse-rate unit sets pitch, `x = k·θ`|
+|Two traverse-rate units (radial + axial)|Spiralling / conical helix|helix's axial unit for pitch, plus a radial one for flare rate — both stepless|
+
+The spiral, helix, and spiralling-helix attachments all share one part, the **traverse-rate
+unit**: a slotted friction-drive that reads out its growth-rate or pitch directly from the
+slot position, the same slot-and-clamp principle as the trammel's beam — no fixed posts or
+swappable parts, genuinely stepless. See the Module C blueprint for the full mechanism.
 
 ## Building the physical instrument
 
@@ -110,13 +117,19 @@ the slider smoothly, and flattens the spiral.
 
 ## The demo
 
-`demo/conic\_curve\_generator\_demo.html` is fully self-contained (open it directly in any
+`demo/conic_curve_generator_demo.html` is fully self-contained (open it directly in any
 browser, no server required). It mirrors the physical build's controls exactly:
 
 * **Guided tour** — auto-plays all eleven curves in sequence, each drawn progressively from
 a blank stage, with pause/resume.
 * **Manual mode** — pick any curve, drag its parameter for an instant live preview, or hit
 **Draw it** to watch the full progressive animation.
+* **Traverse-rate sliders** — the spiral, helix, and spiralling helix each get a second,
+independent slider (turns for the spiral; axial pitch for the two helices) instead of a
+fixed constant, so you can set growth rate and traverse rate separately.
+* **3D rotation** — tick "Rotate this figure in 3D" to tilt the completed curve in space
+(drag on the stage, or use the Tilt/Turn sliders) as if turning the drafting board in your
+hands.
 
 It respects `prefers-reduced-motion` and needs nothing but a browser.
 
