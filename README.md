@@ -53,18 +53,22 @@ of them yourself.
 │   └── hero.svg                                   # banner strip of all 11 curves
 ├── demo/
 │   └── conic_curve_generator_demo.html           # standalone interactive demo (open directly, no server needed)
-└── blueprints/
-    ├── index.html                                 # blueprint previews + downloads (linked from the site nav)
-    ├── conic_generator_build_blueprint.svg        # Modules 1–4: the five required conics
-    └── module_c_bonus_attachments_blueprint.svg   # Module C: rolling disc + spiral arm
+├── blueprints/
+│   ├── index.html                                 # blueprint previews + downloads (linked from the site nav)
+│   ├── conic_generator_build_blueprint.svg        # Modules 1–4: the five required conics
+│   └── module_c_bonus_attachments_blueprint.svg   # Module C: rolling disc, spiral arm, helix, spiralling helix
+└── assembly/
+    ├── index.html                                 # interactive 3D assembly viewer (rotate + explode each module)
+    └── modules_data.js                            # part geometry (position, size, colour) for every module
 ```
 
-All three HTML pages (`index.html`, `demo/…`, `blueprints/index.html`) share the same header
-(logo + cross-links to the other two pages) and footer, so you can land on any of them and
-still get around the whole site.
+All four HTML pages (`index.html`, `demo/…`, `blueprints/index.html`, `assembly/index.html`)
+share the same header (logo + cross-links to the other pages) and footer, so you can land on
+any of them and still get around the whole site.
 
-Everything is static — no build step, no dependencies. `index.html` and everything under
-`demo/` and `blueprints/` can be opened directly from disk or served as-is by GitHub Pages
+Everything is static — no build step, no server-side dependencies. `index.html` and everything
+under `demo/`, `blueprints/`, and `assembly/` can be opened directly from disk (the assembly
+viewer needs internet access once, to load Three.js from a CDN) or served as-is by GitHub Pages
 from the repo root (**Settings → Pages → Deploy from branch → `/ (root)`**).
 
 ## The five required conics
@@ -132,6 +136,21 @@ fixed constant, so you can set growth rate and traverse rate separately.
 hands.
 
 It respects `prefers-reduced-motion` and needs nothing but a browser.
+
+## The 3D assembly viewer
+
+`assembly/index.html` is a separate tool from the curve demo above — instead of drawing
+curves, it shows how each module's *hardware* fits together: board, beam, bolts, wingnuts,
+discs, all positioned and stacked correctly in 3D space, for all eight modules (the four
+required conics plus C1–C4). Drag to orbit, scroll to zoom, and pull the **Explode** slider
+to pull the parts apart along their assembly axis — the same trick IKEA instructions use,
+just interactive.
+
+It's built with [Three.js](https://threejs.org/) loaded from a CDN at runtime, so it needs
+internet access the first time it loads (unlike the fully offline curve demo). Part positions
+are representative assembly poses matched to the blueprint dimensions, not a literal
+re-derivation of every hole and slot — always cut to the numbers on the blueprint sheets
+themselves, not to what you eyeball off the 3D view.
 
 ## Brand assets
 
